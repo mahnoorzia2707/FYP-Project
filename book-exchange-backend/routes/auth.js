@@ -6,13 +6,21 @@ const pool = require('../config/db');
 
 // Register
 router.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
     const hashed = await bcrypt.hash(password, 10);
     try {
-        await pool.query('INSERT INTO users (email, password) VALUES (?, ?)', [email, hashed]);
+        await pool.query(
+            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+            [username, email, hashed]
+        );
         res.status(201).json({ message: 'User registered' });
     } catch (err) {
-        res.status(400).json({ error: 'Email already exists' });
+        // Check for duplicate entry error (MySQL/MariaDB: ER_DUP_ENTRY)
+        if (err.code === 'ER_DUP_ENTRY') {
+            res.status(400).json({ error: 'Email already exists' });
+        } else {
+            res.status(400).json({ error: 'Registration failed', details: err.message });
+        }
     }
 });
 

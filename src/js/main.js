@@ -1,29 +1,17 @@
-// Example array of books (replace or fetch from backend as needed)
-const books = [
-    {
-        title: "Book Title 1",
-        author: "Author Name 1",
-        image: "https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-        title: "Book Title 2",
-        author: "Author Name 2",
-        image: "https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-        title: "Book Title 3",
-        author: "Author Name 3",
-        image: "https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-        title: "Book Title 4",
-        author: "Author Name 4",
-        image: "https://img.freepik.com/free-photo/book-composition-with-open-book_23-2147690555.jpg?semt=ais_hybrid&w=740"
-    }
-    // Add more books as needed
-];
+// Fetch books from backend and render them
 
-function renderBooks() {
+async function fetchBooks() {
+    try {
+        const response = await fetch('http://localhost:5000/api/books');
+        if (!response.ok) throw new Error('Failed to fetch books');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+function renderBooks(books) {
     const booksRow = document.getElementById('books-row');
     if (booksRow) {
         booksRow.innerHTML = '';
@@ -32,7 +20,7 @@ function renderBooks() {
             col.className = 'col-md-4 mb-4';
             col.innerHTML = `
                 <div class="card h-100">
-                    <img src="${book.image}" class="card-img-top" alt="${book.title}">
+                    <img src="${book.image || ''}" class="card-img-top" alt="${book.title}">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${book.title}</h5>
                         <p class="card-text">Author: ${book.author}</p>
@@ -45,8 +33,10 @@ function renderBooks() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    renderBooks();
+document.addEventListener('DOMContentLoaded', async function() {
+    // Fetch and render books from backend
+    const books = await fetchBooks();
+    renderBooks(books);
 
     // Example function for form validation on the login page
     const loginForm = document.getElementById('loginForm');
@@ -59,28 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 event.preventDefault();
                 alert('Please fill in both fields.');
             }
-        });
-    }
-
-    // Example function to load books dynamically on the books page
-    const booksContainer = document.getElementById('booksContainer');
-    if (booksContainer) {
-        loadBooks();
-    }
-
-    function loadBooks() {
-        // Simulated book data
-        const books = [
-            { title: 'Book 1', author: 'Author 1' },
-            { title: 'Book 2', author: 'Author 2' },
-            { title: 'Book 3', author: 'Author 3' }
-        ];
-
-        books.forEach(book => {
-            const bookElement = document.createElement('div');
-            bookElement.className = 'book-item';
-            bookElement.innerHTML = `<h5>${book.title}</h5><p>${book.author}</p>`;
-            booksContainer.appendChild(bookElement);
         });
     }
 
