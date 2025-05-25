@@ -1,0 +1,74 @@
+body {
+    
+    background-image: url('https://img.freepik.com/free-vector/beautiful-book-club-pattern-illustration_23-2149330102.jpg?semt=ais_hybrid&w=740');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+}
+.under-heading{
+    font-size: 1.2em;
+    color:#800000;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px white;  /*White outline */
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    /*color: #343a40;*/
+    color:#800000;
+    font-weight: bold;
+    -webkit-text-stroke: 1px white; /* White outline */
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #343a40;
+    color: white;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
